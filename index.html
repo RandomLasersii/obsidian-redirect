@@ -10,7 +10,8 @@
     
     const allowedPrefixes = [
       `obsidian://open?vault=${vaultName}`,
-      `obsidian://new?vault=${vaultName}`
+      `obsidian://new?vault=${vaultName}`,
+      `obsidian://adv-uri?vault=${vaultName}`
     ];
 
     const isAllowed = target && allowedPrefixes.some(prefix => target.startsWith(prefix));
