@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Opening Obsidian...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const target = params.get("url");
+    const allowedPrefix = "obsidian://open?vault=Jackpot";
+
+    if (target && target.startsWith(allowedPrefix)) {
+      window.location.replace(target);
+      setTimeout(() => window.close(), 1500);
+    } else {
+      document.body.innerHTML = "<p>Blocked: Invalid or unauthorized Obsidian link.</p>";
+    }
+  </script>
+</head>
+<body>
+  <p>Opening note in Obsidian...</p>
+</body>
+</html>
