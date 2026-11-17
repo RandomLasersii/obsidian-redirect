@@ -4,28 +4,34 @@
   <title>Opening Obsidian...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>
-    const search = window.location.search;
-    const prefixIndex = search.indexOf("?url=");
-    const target = prefixIndex !== -1 ? decodeURIComponent(search.slice(prefixIndex + 5)) : null;
-    const vaultName = "Jackpot";
-    
-    const allowedPrefixes = [
-      `obsidian://open?vault=${Jackpot}`,
-      `obsidian://new?vault=${Jackpot}`,
-      `obsidian://adv-uri?vault=${Jackpot}`
-    ];
+    window.onload = function() {
+      const search = window.location.search;
+      const prefixIndex = search.indexOf("?url=");
+      const target = prefixIndex !== -1 ? decodeURIComponent(search.slice(prefixIndex + 5)) : null;
+      const vaultName = "Jackpot";
+      
+      const allowedPrefixes = [
+        `obsidian://open?vault=${vaultName}`,
+        `obsidian://new?vault=${vaultName}`,
+        `obsidian://adv-uri?vault=${vaultName}`
+      ];
 
-    const isAllowed = target && allowedPrefixes.some(prefix => target.startsWith(prefix));
+      const isAllowed = target && allowedPrefixes.some(prefix => target.startsWith(prefix));
+      const linkElement = document.getElementById("manual-link");
 
-    if (isAllowed) {
-      window.location.replace(target);
-      setTimeout(() => window.close(), 1500);
-    } else {
-      document.body.innerHTML = "<p>Blocked: Invalid or unauthorized Obsidian link.</p>";
-    }
+      if (isAllowed) {
+        linkElement.href = target;
+        linkElement.textContent = "Click here to open in Obsidian";
+        window.location.href = target;
+      } else {
+        document.getElementById("status").textContent = "Blocked: Invalid or unauthorized Obsidian link.";
+        linkElement.style.display = "none";
+      }
+    };
   </script>
 </head>
-<body>
-  <p>Opening note in Obsidian...</p>
+<body style="font-family: sans-serif; padding: 2rem;">
+  <p id="status">Opening note in Obsidian...</p>
+  <p><a id="manual-link" href="#">Loading link...</a></p>
 </body>
 </html>
