@@ -6,9 +6,16 @@
   <script>
     const params = new URLSearchParams(window.location.search);
     const target = params.get("url");
-    const allowedPrefix = "obsidian://open?vault=Jackpot";
+    const vaultName = "YourVaultName";
+    
+    const allowedPrefixes = [
+      `obsidian://open?vault=${vaultName}`,
+      `obsidian://new?vault=${vaultName}`
+    ];
 
-    if (target && target.startsWith(allowedPrefix)) {
+    const isAllowed = target && allowedPrefixes.some(prefix => target.startsWith(prefix));
+
+    if (isAllowed) {
       window.location.replace(target);
       setTimeout(() => window.close(), 1500);
     } else {
